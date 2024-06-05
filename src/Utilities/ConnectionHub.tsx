@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Event } from "../Types/Event";
 
 const client = axios.create({
   baseURL: import.meta.env.base_url,
@@ -24,14 +25,6 @@ export const addEmail = async (email: string) => {
 export const getEvents = async (calendarId: string) => {
   return await client.get(`/calendar/getEvents/${calendarId}`);
 };
-
-interface Event {
-  __id: number;
-  name: string;
-  creatorId: string;
-  description: string;
-  start: string;
-}
 
 export const addEvent = async (event: Event, calendar_id: String) => {
   return await client.post("/addEvent", {
