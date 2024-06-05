@@ -10,11 +10,11 @@ function App() {
         <Route
           index
           element={
-            <Navigate replace to={isLoggedIn ? "/calendarHome" : "/login"} />
+            <Navigate replace to={isLoggedIn ? "/calendarList" : "/login"} />
           }
         />
         {isLoggedIn && (
-          <Route path="/calendarHome" element={<CalendarHome />} />
+          <Route path="/calendarList" element={<CalendarList />} />
         )}
         {!isLoggedIn && <Route path="/signup" element={<Signup />} />}
         {!isLoggedIn && <Route path="/login" element={<Login />} />}
