@@ -1,9 +1,15 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-
 import Event from "../../Types/Event";
 import { useState } from "react";
+import {
+  addEvent,
+  deleteEvent,
+  updateEvent,
+  getEvents,
+} from "../../Utilities/ConnectionHub";
 
+//Attention: need to change, it should only require calendarId, and then fetch events from the server by itself.
 export default function CalendarMainView({
   events,
   owner,
@@ -12,9 +18,22 @@ export default function CalendarMainView({
   owner: string;
 }) {
   const [eventList, setEventList] = useState<Event[]>(events);
+
   function handleEventClick({ event }) {
     alert(`Event: ${event.name}\nStart: ${event.start}`);
   }
+
+  async function deleteEvent(eventId: string) {
+    try {
+      await deleteEvent(eventId);
+      setEventList((prevEvents) => {
+        return prevEvents.filter((event) => event.__id !== eventId);
+      });
+    } catch {
+      alert("Failed to delete event");
+    }
+  }
+
   function handleAddEvent() {}
   return (
     <div>
