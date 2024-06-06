@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { navigate } from "@reach/router";
+import { useNavigate } from "react-router-dom";
 import SignCategory from "../Types/SignCategory";
 import { signup, login } from "../Utilities/ConnectionHub";
 
 export default function AuthForm({ category }: { category: SignCategory }) {
+  const navigate = useNavigate();
   interface Credential {
     email: string;
     password: string;
