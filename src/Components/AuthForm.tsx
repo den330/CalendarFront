@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { navigate } from "@reach/router";
 import SignCategory from "../Types/SignCategory";
 import { signup, login } from "../Utilities/ConnectionHub";
 
@@ -27,8 +28,10 @@ export default function AuthForm({ category }: { category: SignCategory }) {
     try {
       if (category === SignCategory.SignUp) {
         await signup(credential.email, credential.password);
+        navigate("/login");
       } else {
-        login(credential.email, credential.password);
+        await login(credential.email, credential.password);
+        navigate("/calendarList");
       }
     } catch (error) {
       alert(`${category} failed: ${error}`);
