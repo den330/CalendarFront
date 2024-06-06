@@ -1,4 +1,4 @@
-export interface Event {
+export default interface Event {
   __id: string;
   name: string;
   creatorId: string;
