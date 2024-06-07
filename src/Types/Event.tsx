@@ -1,7 +1,7 @@
 export default interface Event {
-  __id: string;
+  __id?: string;
   name: string;
-  creatorId: string;
+  creatorId?: string;
   description?: string;
   start: Date;
 }
