@@ -13,7 +13,7 @@ import {
 } from "../Utilities/ConnectionHub";
 
 export default function CalendarMainView() {
-  const { calendar_id, owner } = useParams();
+  const { calendar_id, owner, ownerShip } = useParams();
   const [eventList, setEventList] = useState<Event[]>([]);
   const [addEventModal, setAddEventModal] = useState<boolean>(false);
 
