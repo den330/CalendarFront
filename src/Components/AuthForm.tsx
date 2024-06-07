@@ -3,8 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignCategory from "../Types/SignCategory";
 import { signup, login } from "../Utilities/ConnectionHub";
+import { useLogInContext } from "../CustomHooks/useLogInContext";
 
 export default function AuthForm({ category }: { category: SignCategory }) {
+  const { setLoggedIn } = useLogInContext();
   const navigate = useNavigate();
   interface Credential {
     email: string;
@@ -28,10 +30,12 @@ export default function AuthForm({ category }: { category: SignCategory }) {
     e.preventDefault();
     try {
       if (category === SignCategory.SignUp) {
+        console.log(credential.email, credential.password);
         await signup(credential.email, credential.password);
         navigate("/login");
       } else {
         await login(credential.email, credential.password);
+        setLoggedIn(true);
         navigate("/calendarList");
       }
     } catch (error) {

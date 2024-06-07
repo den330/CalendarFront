@@ -2,7 +2,7 @@ import axios from "axios";
 import Event from "../Types/Event";
 
 const client = axios.create({
-  baseURL: import.meta.env.base_url,
+  baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
 });
 
