@@ -26,7 +26,8 @@ export default function CalendarList() {
       <div>
         <h2
           onClick={() => {
-            const url = `/calendar/${myCalendar?.__id}/${myCalendar?.name}/true`;
+            const url = `/calendar/${myCalendar?._id}/${myCalendar?.name}/true`;
+            console.log(url);
             navigate(url);
           }}
         >
@@ -39,9 +40,9 @@ export default function CalendarList() {
         {calendarList.map((calendar) => {
           return (
             <h3
-              key={calendar.__id}
+              key={calendar._id}
               onClick={() => {
-                const url = `/calendar/${calendar.__id}/${calendar.name}/false`;
+                const url = `/calendar/${calendar._id}/${calendar.name}/false`;
                 navigate(url);
               }}
             >

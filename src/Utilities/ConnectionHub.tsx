@@ -26,16 +26,20 @@ export const getEvents = async (calendarId: string) => {
   return await client.get(`/calendar/getEvents/${calendarId}`);
 };
 
-export const addEvent = async (event: Event, calendar_id: String) => {
-  return await client.post("/addEvent", {
-    name: event.name,
+export const addEvent = async (event: Event, calendar_id: string) => {
+  return await client.post("/calendar/addEvent", {
+    title: event.title,
     start: event.start,
     description: event.description,
     calendar_id,
   });
 };
 
-export const deleteEvent = async (event: Event, calendar_id: String) => {
+export const getLogInStatus = async () => {
+  return await client.get("/logInStatus");
+};
+
+export const deleteEvent = async (event: Event, calendar_id: string) => {
   return await client.post("/removeEvent", {
     eventId: event.__id,
     calendarId: calendar_id,
@@ -45,7 +49,7 @@ export const deleteEvent = async (event: Event, calendar_id: String) => {
 export const updateEvent = async (event: Event) => {
   return await client.post("/updateEvent", {
     eventId: event.__id,
-    name: event.name,
+    title: event.title,
     start: event.start,
     description: event.description,
   });

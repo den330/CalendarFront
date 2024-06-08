@@ -18,7 +18,7 @@ export default function CalendarMainView() {
   const [addEventModal, setAddEventModal] = useState<boolean>(false);
 
   function handleEventClick({ event }) {
-    alert(`Event: ${event.name}\nStart: ${event.start}`);
+    alert(`Event: ${event.title}\nStart: ${event.start}`);
   }
 
   useEffect(() => {
@@ -64,6 +64,7 @@ export default function CalendarMainView() {
       if (!calendar_id) {
         throw new Error("Calendar id is not provided");
       }
+      console.log(`new event is ${newEvent}, calendar id is ${calendar_id}`);
       await addEvent(newEvent, calendar_id);
       setEventList((prevEvents) => {
         return [...prevEvents, newEvent];
@@ -84,7 +85,7 @@ export default function CalendarMainView() {
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
-        weekends={false}
+        weekends={true}
         events={eventList}
         eventContent={renderEventContent}
         eventClick={handleEventClick}
@@ -97,7 +98,7 @@ function renderEventContent(eventInfo: { timeText: string; event: Event }) {
   return (
     <>
       <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.name}</i>
+      <i>{eventInfo.event.title}</i>
     </>
   );
 }

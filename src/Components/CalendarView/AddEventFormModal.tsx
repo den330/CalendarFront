@@ -10,8 +10,8 @@ export default function AddEventFormModal({
   const nameRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault;
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     const name = nameRef.current?.value;
     const dateString = dateRef.current?.value;
     const description = descriptionRef.current?.value;
@@ -20,7 +20,7 @@ export default function AddEventFormModal({
       return;
     }
     const date = new Date(dateString);
-    addEvent(name, date, description);
+    await addEvent(name, date, description);
   }
   if (!shouldAppear) {
     return null;

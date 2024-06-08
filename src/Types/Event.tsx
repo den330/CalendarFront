@@ -1,6 +1,6 @@
 export default interface Event {
   __id?: string;
-  name: string;
+  title: string;
   creatorId?: string;
   description?: string;
   start: Date;
