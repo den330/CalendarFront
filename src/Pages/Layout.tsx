@@ -12,7 +12,7 @@ export default function Layout() {
   return (
     <div>
       <header>
-        <nav className="bg-black">
+        <nav className="bg-white">
           <ul>
             <li>
               <Link to="/">Home</Link>

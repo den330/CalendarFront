@@ -4,7 +4,7 @@ export default function AddEventFormModal({
   addEvent,
   shouldAppear,
 }: {
-  addEvent: (name: string, date: Date, description?: string) => Promise<void>;
+  addEvent: (title: string, date: Date, description?: string) => Promise<void>;
   shouldAppear: boolean;
 }) {
   const nameRef = useRef<HTMLInputElement>(null);

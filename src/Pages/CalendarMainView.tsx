@@ -1,9 +1,12 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import Event from "../Types/Event";
+import MyEvent from "../Types/Event";
 import AddEventFormModal from "../Components/CalendarView/AddEventFormModal";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import EventDetailView from "../Components/CalendarView/EventDetailView";
+import { v4 as uuidv4 } from "uuid";
+import { deleteEvent as deleteEventRemote } from "../Utilities/ConnectionHub";
 
 import {
   addEvent,
@@ -14,11 +17,15 @@ import {
 
 export default function CalendarMainView() {
   const { calendar_id, owner, ownerShip } = useParams();
-  const [eventList, setEventList] = useState<Event[]>([]);
+  const [eventList, setEventList] = useState<MyEvent[]>([]);
   const [addEventModal, setAddEventModal] = useState<boolean>(false);
+  const [currentClickedEvent, setCurrentClickedEvent] = useState<object | null>(
+    null
+  );
 
   function handleEventClick({ event }) {
-    alert(`Event: ${event.title}\nStart: ${event.start}`);
+    console.log(`clicked event is ${JSON.stringify(event)}`);
+    setCurrentClickedEvent(event as MyEvent);
   }
 
   useEffect(() => {
@@ -41,9 +48,10 @@ export default function CalendarMainView() {
 
   async function deleteEvent(eventId: string) {
     try {
-      await deleteEvent(eventId);
+      console.log(`deleting event with id ${eventId}`);
+      await deleteEventRemote(eventId, calendar_id);
       setEventList((prevEvents) => {
-        return prevEvents.filter((event) => event.__id !== eventId);
+        return prevEvents.filter((event) => event._id !== eventId);
       });
     } catch {
       alert("Failed to delete event");
@@ -55,12 +63,13 @@ export default function CalendarMainView() {
   }
 
   async function addEventInCalendar(
-    name: string,
+    title: string,
     date: Date,
     description?: string
   ) {
     try {
-      const newEvent: Event = { name, start: date, description };
+      const _id = uuidv4();
+      const newEvent: MyEvent = { _id, title, start: date, description };
       if (!calendar_id) {
         throw new Error("Calendar id is not provided");
       }
@@ -77,10 +86,16 @@ export default function CalendarMainView() {
   return (
     <div>
       <h1>{owner}</h1>
-      <button onClick={handleAddEvent}> Add Event </button>
+      <button onClick={handleAddEvent}> Add MyEvent </button>
       <AddEventFormModal
         addEvent={addEventInCalendar}
         shouldAppear={addEventModal}
+      />
+      <EventDetailView
+        shouldOpen={currentClickedEvent !== null}
+        event={currentClickedEvent!}
+        deleteEvent={deleteEvent}
+        onClose={() => setCurrentClickedEvent(null)}
       />
       <FullCalendar
         plugins={[dayGridPlugin]}
@@ -94,7 +109,7 @@ export default function CalendarMainView() {
   );
 }
 
-function renderEventContent(eventInfo: { timeText: string; event: Event }) {
+function renderEventContent(eventInfo: { timeText: string; event: MyEvent }) {
   return (
     <>
       <b>{eventInfo.timeText}</b>
