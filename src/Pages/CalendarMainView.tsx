@@ -5,8 +5,8 @@ import AddEventFormModal from "../Components/CalendarView/AddEventFormModal";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import EventDetailView from "../Components/CalendarView/EventDetailView";
-import { v4 as uuidv4 } from "uuid";
 import { deleteEvent as deleteEventRemote } from "../Utilities/ConnectionHub";
+import crypto from "crypto";
 
 import {
   addEvent,
@@ -38,6 +38,7 @@ export default function CalendarMainView() {
           throw new Error("Calendar id is not provided");
         }
         const response = await getEvents(calendar_id);
+        console.log(response.data);
         setEventList(response.data);
       } catch {
         alert("Failed to fetch events");
@@ -48,7 +49,9 @@ export default function CalendarMainView() {
 
   async function deleteEvent(eventId: string) {
     try {
-      console.log(`deleting event with id ${eventId}`);
+      if (!calendar_id) {
+        throw new Error("Calendar id is not provided");
+      }
       await deleteEventRemote(eventId, calendar_id);
       setEventList((prevEvents) => {
         return prevEvents.filter((event) => event._id !== eventId);
@@ -68,7 +71,7 @@ export default function CalendarMainView() {
     description?: string
   ) {
     try {
-      const _id = uuidv4();
+      const _id = crypto.randomBytes(12).toString("hex");
       const newEvent: MyEvent = { _id, title, start: date, description };
       if (!calendar_id) {
         throw new Error("Calendar id is not provided");

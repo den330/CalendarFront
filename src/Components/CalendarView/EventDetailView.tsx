@@ -30,6 +30,7 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
               return;
             }
             deleteEvent(event.extendedProps._id);
+            onClose();
           }}
         >
           Delete
