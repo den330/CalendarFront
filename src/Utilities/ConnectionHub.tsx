@@ -49,7 +49,7 @@ export const deleteEvent = async (eventId: string, calendar_id: string) => {
 };
 
 export const updateEvent = async (event: Event) => {
-  return await client.post("/updateEvent", {
+  return await client.post("/calendar/updateEvent", {
     eventId: event._id,
     title: event.title,
     start: event.start,

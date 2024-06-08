@@ -5,13 +5,12 @@ import AddEventFormModal from "../Components/CalendarView/AddEventFormModal";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import EventDetailView from "../Components/CalendarView/EventDetailView";
-import { deleteEvent as deleteEventRemote } from "../Utilities/ConnectionHub";
 import crypto from "crypto";
 
 import {
   addEvent,
-  deleteEvent,
-  updateEvent,
+  deleteEvent as deleteEventRemote,
+  updateEvent as updateEventRemote,
   getEvents,
 } from "../Utilities/ConnectionHub";
 
@@ -19,13 +18,19 @@ export default function CalendarMainView() {
   const { calendar_id, owner, ownerShip } = useParams();
   const [eventList, setEventList] = useState<MyEvent[]>([]);
   const [addEventModal, setAddEventModal] = useState<boolean>(false);
-  const [currentClickedEvent, setCurrentClickedEvent] = useState<object | null>(
-    null
-  );
+  const [currentClickedEvent, setCurrentClickedEvent] =
+    useState<MyEvent | null>(null);
 
   function handleEventClick({ event }) {
-    console.log(`clicked event is ${JSON.stringify(event)}`);
-    setCurrentClickedEvent(event as MyEvent);
+    const myEvent: MyEvent = {
+      title: event.title,
+      start: event.start,
+      description: event.extendedProps.description,
+      creatorId: event.extendedProps.creatorId,
+      _id: event.extendedProps._id,
+    };
+    console.log(`Event clicked: ${JSON.stringify(myEvent)}`);
+    setCurrentClickedEvent(myEvent);
   }
 
   useEffect(() => {
@@ -38,7 +43,7 @@ export default function CalendarMainView() {
           throw new Error("Calendar id is not provided");
         }
         const response = await getEvents(calendar_id);
-        console.log(response.data);
+
         setEventList(response.data);
       } catch {
         alert("Failed to fetch events");
@@ -58,6 +63,22 @@ export default function CalendarMainView() {
       });
     } catch {
       alert("Failed to delete event");
+    }
+  }
+
+  async function updateEvent(event: MyEvent) {
+    try {
+      await updateEventRemote(event);
+      setEventList((prevEvents) => {
+        return prevEvents.map((prevEvent) => {
+          if (prevEvent._id === event._id) {
+            return event;
+          }
+          return prevEvent;
+        });
+      });
+    } catch (e) {
+      alert(`Failed to update event: ${e}`);
     }
   }
 
@@ -98,6 +119,7 @@ export default function CalendarMainView() {
         shouldOpen={currentClickedEvent !== null}
         event={currentClickedEvent!}
         deleteEvent={deleteEvent}
+        updateEvent={updateEvent}
         onClose={() => setCurrentClickedEvent(null)}
       />
       <FullCalendar
@@ -107,6 +129,9 @@ export default function CalendarMainView() {
         events={eventList}
         eventContent={renderEventContent}
         eventClick={handleEventClick}
+        defaultAllDay={false}
+        defaultTimedEventDuration={{ hours: 0 }}
+        forceEventDuration={true}
       />
     </div>
   );
