@@ -1,5 +1,6 @@
 import axios from "axios";
 import Event from "../Types/Event";
+import { padStart } from "@fullcalendar/core/internal.js";
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -7,11 +8,35 @@ const client = axios.create({
 });
 
 export const signup = async (email: string, password: string) => {
-  return await client.post("/signup", { email, password });
+  return await client.post("/signup", {
+    email,
+    password,
+    requirePassword: true,
+  });
+};
+
+export const googleSignup = async (email: string) => {
+  return await client.post("/signup", {
+    email,
+    password: "",
+    requirePassword: false,
+  });
 };
 
 export const login = async (email: string, password: string) => {
-  return await client.post("/login", { email, password });
+  return await client.post("/login", {
+    email,
+    password,
+    requirePassword: true,
+  });
+};
+
+export const googleLogin = async (email: string) => {
+  return await client.post("/login", {
+    email,
+    password: "",
+    requirePassword: false,
+  });
 };
 
 export const logout = async () => {
