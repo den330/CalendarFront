@@ -1,4 +1,4 @@
-# CalendarShare: Frontend Functionality
+# CalendarShare: Functionality
 
 **CalendarShare** enables every signed-in user to simultaneously take on two roles:
 
