@@ -35,6 +35,10 @@ export default function AuthForm({ category }: { category: SignCategory }) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (credential.email.endsWith("@gmail.com")) {
+      alert("Please use the Google Sign Up/In button");
+      return;
+    }
     try {
       if (category === SignCategory.SignUp) {
         await signup(credential.email, credential.password);
