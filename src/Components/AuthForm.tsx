@@ -37,7 +37,6 @@ export default function AuthForm({ category }: { category: SignCategory }) {
     e.preventDefault();
     try {
       if (category === SignCategory.SignUp) {
-        console.log(credential.email, credential.password);
         await signup(credential.email, credential.password);
       }
       await logInFlow();
