@@ -50,6 +50,7 @@ export default function CalendarList() {
     try {
       await deleteEmail(emailToDelete);
       setEmailList((prev) => prev.filter((email) => email !== emailToDelete));
+      setEmailToDelete(null);
     } catch (e) {
       alert(`Failed to delete email: ${e}`);
     }
