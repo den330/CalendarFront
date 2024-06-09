@@ -34,8 +34,9 @@ export default function AuthForm({ category }: { category: SignCategory }) {
         await signup(credential.email, credential.password);
         navigate("/login");
       } else {
-        await login(credential.email, credential.password);
-        setLoggedIn(true);
+        const response = await login(credential.email, credential.password);
+        const userId = response.data.userId;
+        setLoggedIn({ status: true, userId });
         navigate("/calendarList");
       }
     } catch (error) {

@@ -2,14 +2,17 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { getLogInStatus } from "../Utilities/ConnectionHub";
 
 type LogInContextType = {
-  isLoggedIn: boolean;
-  setLoggedIn: (loggedIn: boolean) => void;
+  isLoggedIn: { status: boolean; userId: string };
+  setLoggedIn: (loggedIn: { status: boolean; userId: string }) => void;
 };
 
 export const LogInContext = createContext<null | LogInContextType>(null);
 
 export const LogInContextWrapper = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState<{
+    status: boolean;
+    userId: string;
+  }>({ status: false, userId: "" });
   return (
     <LogInContext.Provider value={{ isLoggedIn, setLoggedIn }}>
       {children}

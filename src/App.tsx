@@ -17,9 +17,14 @@ function App() {
       try {
         const response = await getLogInStatus();
         console.log(`${response.data}`);
-        setLoggedIn(response.data.logInStatus);
+        const loginStatus = response.data.logInStatus;
+        if (loginStatus) {
+          setLoggedIn({ status: true, userId: response.data.userId });
+        } else {
+          setLoggedIn({ status: false, userId: "" });
+        }
       } catch {
-        setLoggedIn(false);
+        setLoggedIn({ status: false, userId: "" });
       } finally {
         setIsLoading(false);
       }
@@ -35,20 +40,23 @@ function App() {
         <Route
           index
           element={
-            <Navigate replace to={isLoggedIn ? "/calendarList" : "/login"} />
+            <Navigate
+              replace
+              to={isLoggedIn.status ? "/calendarList" : "/login"}
+            />
           }
         />
-        {isLoggedIn && (
+        {isLoggedIn.status && (
           <Route path="/calendarList" element={<CalendarList />} />
         )}
-        {isLoggedIn && (
+        {isLoggedIn.status && (
           <Route
             path="/calendar/:calendar_id/:owner/:ownerShip"
             element={<CalendarMainView />}
           />
         )}
-        {!isLoggedIn && <Route path="/signup" element={<Signup />} />}
-        {!isLoggedIn && <Route path="/login" element={<Login />} />}
+        {!isLoggedIn.status && <Route path="/signup" element={<Signup />} />}
+        {!isLoggedIn.status && <Route path="/login" element={<Login />} />}
         <Route path="/about" element={<About />} />
       </Route>
     </Routes>

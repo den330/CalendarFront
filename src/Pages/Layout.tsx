@@ -8,7 +8,7 @@ export default function Layout() {
   async function handleLogOut() {
     try {
       await logout();
-      setLoggedIn(false);
+      setLoggedIn({ status: false, userId: "" });
       navigate("/login");
     } catch (e) {
       alert(`Failed to log out: ${e}`);

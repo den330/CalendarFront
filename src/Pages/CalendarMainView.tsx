@@ -121,6 +121,7 @@ export default function CalendarMainView() {
         deleteEvent={deleteEvent}
         updateEvent={updateEvent}
         onClose={() => setCurrentClickedEvent(null)}
+        key={currentClickedEvent?._id}
       />
       <FullCalendar
         plugins={[dayGridPlugin]}

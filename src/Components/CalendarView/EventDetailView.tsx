@@ -1,6 +1,7 @@
 import React, { ReactElement, useState, useRef } from "react";
 import MyEvent from "../../Types/Event";
 import Popup from "reactjs-popup";
+import { useLogInContext } from "../../CustomHooks/useLogInContext";
 
 const formatDateForInputLocal = (date) => {
   // Adjust for the timezone offset to keep it local
@@ -29,6 +30,7 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const startRef = useRef(null);
+  const { isLoggedIn } = useLogInContext();
 
   function handleEdit() {
     setEditMode(!editMode);
@@ -63,7 +65,9 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
         <h1>{event.title}</h1>
         <p>{event.description}</p>
         <p>{event.start.toLocaleDateString()}</p>
-        <button onClick={handleEdit}> Edit </button>
+        {isLoggedIn.userId === event.creatorId && (
+          <button onClick={handleEdit}> Edit </button>
+        )}
         {editMode && (
           <div>
             <input type="text" defaultValue={event.title} ref={titleRef} />
