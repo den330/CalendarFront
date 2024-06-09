@@ -43,7 +43,6 @@ export default function CalendarMainView() {
           throw new Error("Calendar id is not provided");
         }
         const response = await getEvents(calendar_id);
-
         setEventList(response.data);
       } catch {
         alert("Failed to fetch events");
@@ -58,9 +57,9 @@ export default function CalendarMainView() {
         throw new Error("Calendar id is not provided");
       }
       await deleteEventRemote(eventId, calendar_id);
-      setEventList((prevEvents) => {
-        return prevEvents.filter((event) => event._id !== eventId);
-      });
+      setEventList((prevEvents) =>
+        prevEvents.filter((event) => event._id !== eventId)
+      );
     } catch {
       alert("Failed to delete event");
     }
@@ -69,14 +68,11 @@ export default function CalendarMainView() {
   async function updateEvent(event: MyEvent) {
     try {
       await updateEventRemote(event);
-      setEventList((prevEvents) => {
-        return prevEvents.map((prevEvent) => {
-          if (prevEvent._id === event._id) {
-            return event;
-          }
-          return prevEvent;
-        });
-      });
+      setEventList((prevEvents) =>
+        prevEvents.map((prevEvent) =>
+          prevEvent._id === event._id ? event : prevEvent
+        )
+      );
     } catch (e) {
       alert(`Failed to update event: ${e}`);
     }
@@ -99,18 +95,22 @@ export default function CalendarMainView() {
       }
       console.log(`new event is ${newEvent}, calendar id is ${calendar_id}`);
       await addEvent(newEvent, calendar_id);
-      setEventList((prevEvents) => {
-        return [...prevEvents, newEvent];
-      });
+      setEventList((prevEvents) => [...prevEvents, newEvent]);
       setAddEventModal(false);
     } catch (error) {
       alert("Failed to add event" + error);
     }
   }
+
   return (
-    <div>
-      <h1>{owner}</h1>
-      <button onClick={handleAddEvent}> Add MyEvent </button>
+    <div className="p-4">
+      <h1 className="text-2xl font-semibold text-gray-800 mb-4">{owner}</h1>
+      <button
+        onClick={handleAddEvent}
+        className="mb-2 px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+      >
+        Add MyEvent
+      </button>
       <AddEventFormModal
         addEvent={addEventInCalendar}
         shouldAppear={addEventModal}
