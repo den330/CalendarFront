@@ -1,6 +1,5 @@
 import axios from "axios";
 import Event from "../Types/Event";
-import { padStart } from "@fullcalendar/core/internal.js";
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -33,6 +32,14 @@ export const login = async (email: string, password: string) => {
 
 export const googleLogin = async (email: string) => {
   return await client.post("/login", {
+    email,
+    password: "",
+    requirePassword: false,
+  });
+};
+
+export const googleSignUpAndLogin = async (email: string) => {
+  return await client.post("/googleAuth", {
     email,
     password: "",
     requirePassword: false,
