@@ -3,6 +3,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import MyEvent from "../Types/Event";
 import AddEventFormModal from "../Components/CalendarView/AddEventFormModal";
 import { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 import EventDetailView from "../Components/CalendarView/EventDetailView";
 import crypto from "crypto";
@@ -13,6 +14,7 @@ import {
   updateEvent as updateEventRemote,
   getEvents,
 } from "../Utilities/ConnectionHub";
+import { EventClickArg } from "@fullcalendar/core/index.js";
 
 export default function CalendarMainView() {
   const { calendar_id, owner, ownerShip } = useParams();
@@ -21,10 +23,14 @@ export default function CalendarMainView() {
   const [currentClickedEvent, setCurrentClickedEvent] =
     useState<MyEvent | null>(null);
 
-  function handleEventClick({ event }) {
+  function handleEventClick({ event }: EventClickArg) {
+    const startDate = event.start;
+    if (!startDate) {
+      return;
+    }
     const myEvent: MyEvent = {
       title: event.title,
-      start: event.start,
+      start: startDate,
       description: event.extendedProps.description,
       creatorId: event.extendedProps.creatorId,
       _id: event.extendedProps._id,
