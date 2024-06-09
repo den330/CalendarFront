@@ -26,19 +26,21 @@ export default function AuthForm({ category }: { category: SignCategory }) {
     });
   }
 
+  async function logInFlow() {
+    const response = await login(credential.email, credential.password);
+    const userId = response.data.userId;
+    setLoggedIn({ status: true, userId });
+    navigate("/calendarList");
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       if (category === SignCategory.SignUp) {
         console.log(credential.email, credential.password);
         await signup(credential.email, credential.password);
-        navigate("/login");
-      } else {
-        const response = await login(credential.email, credential.password);
-        const userId = response.data.userId;
-        setLoggedIn({ status: true, userId });
-        navigate("/calendarList");
       }
+      await logInFlow();
     } catch (error) {
       alert(`${category} failed: ${error}`);
     }
