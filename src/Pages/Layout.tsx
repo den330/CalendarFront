@@ -8,6 +8,7 @@ import { jwtDecode } from "jwt-decode";
 export default function Layout() {
   const { isLoggedIn, setLoggedIn } = useLogInContext();
   const navigate = useNavigate();
+
   async function handleLogOut() {
     try {
       await logout();
@@ -18,28 +19,48 @@ export default function Layout() {
       alert(`Failed to log out: ${e}`);
     }
   }
+
   return (
-    <div>
-      <header>
-        <nav className="bg-white">
-          <ul>
+    <div className="flex flex-col min-h-screen">
+      <header className="bg-white shadow-md">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ul className="flex justify-between items-center py-4">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" className="text-blue-600 hover:text-blue-800">
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/about" className="text-blue-600 hover:text-blue-800">
+                About
+              </Link>
             </li>
             {isLoggedIn.status ? (
               <li>
-                <button onClick={handleLogOut}>Log Out</button>
+                <button
+                  onClick={handleLogOut}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  Log Out
+                </button>
               </li>
             ) : (
               <>
                 <li>
-                  <Link to="/signup">Sign Up</Link>
+                  <Link
+                    to="/signup"
+                    className="text-blue-600 hover:text-blue-800"
+                  >
+                    Sign Up
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/login">Log In</Link>
+                  <Link
+                    to="/login"
+                    className="text-blue-600 hover:text-blue-800"
+                  >
+                    Log In
+                  </Link>
                 </li>
                 <li>
                   <GoogleLogin
@@ -69,17 +90,18 @@ export default function Layout() {
                       console.log("Login Failed");
                     }}
                   />
-                  ;
                 </li>
               </>
             )}
           </ul>
         </nav>
       </header>
-      <main>
+      <main className="flex-grow">
         <Outlet />
       </main>
-      <footer> Calendar Share 2024 </footer>
+      <footer className="bg-gray-100 text-center py-4 text-sm text-gray-600">
+        Calendar Share 2024
+      </footer>
     </div>
   );
 }
