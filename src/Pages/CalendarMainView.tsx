@@ -120,6 +120,7 @@ export default function CalendarMainView() {
         event={currentClickedEvent!}
         deleteEvent={deleteEvent}
         updateEvent={updateEvent}
+        calendarOwnership={ownerShip === "true"}
         onClose={() => setCurrentClickedEvent(null)}
         key={currentClickedEvent?._id}
       />

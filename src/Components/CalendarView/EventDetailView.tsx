@@ -15,6 +15,7 @@ interface EventDetailViewProps {
   event: MyEvent;
   deleteEvent: (eventId: string) => Promise<void>;
   updateEvent: (event: MyEvent) => Promise<void>;
+  calendarOwnership: boolean;
   shouldOpen: boolean;
   onClose: () => void;
 }
@@ -23,6 +24,7 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
   event,
   deleteEvent,
   updateEvent,
+  calendarOwnership,
   shouldOpen,
   onClose,
 }): ReactElement | null => {
@@ -65,7 +67,7 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
         <h1>{event.title}</h1>
         <p>{event.description}</p>
         <p>{event.start.toLocaleDateString()}</p>
-        {isLoggedIn.userId === event.creatorId && (
+        {(isLoggedIn.userId === event.creatorId || calendarOwnership) && (
           <button onClick={handleEdit}> Edit </button>
         )}
         {editMode && (
