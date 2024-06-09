@@ -14,12 +14,24 @@ export const login = async (email: string, password: string) => {
   return await client.post("/login", { email, password });
 };
 
+export const logout = async () => {
+  return await client.get("/logout");
+};
+
 export const getCalendarList = async () => {
   return await client.get("/calendar/getAllCalendars");
 };
 
 export const addEmail = async (email: string) => {
   return await client.post("/user/addEmail", { email });
+};
+
+export const deleteEmail = async (email: string) => {
+  return await client.post("/user/removeEmail", { email });
+};
+
+export const getEmails = async () => {
+  return await client.get("/user/getEmails");
 };
 
 export const getEvents = async (calendarId: string) => {

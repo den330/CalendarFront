@@ -1,13 +1,18 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useLogInContext } from "../CustomHooks/useLogInContext";
+import { logout } from "../Utilities/ConnectionHub";
 
 export default function Layout() {
   const { isLoggedIn, setLoggedIn } = useLogInContext();
   const navigate = useNavigate();
-  function handleLogOut() {
-    //TODO: implement network request to log out
-    setLoggedIn(false);
-    navigate("/login");
+  async function handleLogOut() {
+    try {
+      await logout();
+      setLoggedIn(false);
+      navigate("/login");
+    } catch (e) {
+      alert(`Failed to log out: ${e}`);
+    }
   }
   return (
     <div>
@@ -21,14 +26,9 @@ export default function Layout() {
               <Link to="/about">About</Link>
             </li>
             {isLoggedIn ? (
-              <>
-                <li>
-                  <Link to="/calendarHome">Calendar Home</Link>
-                </li>
-                <li>
-                  <button onClick={handleLogOut}>Log Out</button>
-                </li>
-              </>
+              <li>
+                <button onClick={handleLogOut}>Log Out</button>
+              </li>
             ) : (
               <>
                 <li>

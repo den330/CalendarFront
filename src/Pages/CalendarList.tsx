@@ -1,7 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import { getCalendarList, addEmail } from "../Utilities/ConnectionHub";
+import {
+  getCalendarList,
+  addEmail,
+  deleteEmail,
+  getEmails,
+} from "../Utilities/ConnectionHub";
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Types/Calendar";
+import Select from "react-dropdown-select";
 
 export default function CalendarList() {
   const navigate = useNavigate();
@@ -9,6 +15,7 @@ export default function CalendarList() {
   const [calendarList, setCalendarList] = useState<Calendar[] | []>([]);
   const [myCalendar, setMyCalendar] = useState<Calendar | null>(null);
   const [emailList, setEmailList] = useState<string[] | []>([]);
+  const [emailToDelete, setEmailToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchCalendarList() {
@@ -23,17 +30,31 @@ export default function CalendarList() {
 
     async function fetchEmailList() {
       try {
-        const response = await getCalendarList();
+        const response = await getEmails();
         console.log(`Emails: ${response.data.emails}`);
         setEmailList(response.data.emails ?? []);
-      } catch {
-        alert("Failed to fetch email list");
+      } catch (e) {
+        alert(`Failed to fetch email list: ${e}`);
       }
     }
 
     fetchEmailList();
     fetchCalendarList();
   }, []);
+
+  async function handleDeleteEmail() {
+    if (!emailToDelete) {
+      alert("Email is required");
+      return;
+    }
+    try {
+      await deleteEmail(emailToDelete);
+      setEmailList((prev) => prev.filter((email) => email !== emailToDelete));
+    } catch (e) {
+      alert(`Failed to delete email: ${e}`);
+    }
+  }
+
   async function handleAddEmail() {
     const newEmail = emailRef.current?.value;
     if (!newEmail) {
@@ -70,6 +91,17 @@ export default function CalendarList() {
           <label>Add Email:</label>
           <input type="email" ref={emailRef} />
           <button onClick={handleAddEmail}>Confirm</button>
+        </div>
+        <div>
+          <label>Delete Email:</label>
+          <Select
+            values={[]}
+            options={emailList.map((email) => ({ value: email, label: email }))}
+            onChange={(selected) => {
+              setEmailToDelete(selected[0].value);
+            }}
+          />
+          <button onClick={handleDeleteEmail}>Confirm</button>
         </div>
       </div>
       <div>
