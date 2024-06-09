@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# CalendarShare: Functionality
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**CalendarShare** enables every signed-in user to simultaneously take on two roles:
 
-Currently, two official plugins are available:
+1. **Owner of Your Own Calendar**
+2. **Authorized User of Shared Calendars**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## As the Owner of Your Own Calendar
 
-## Expanding the ESLint configuration
+As the owner, you possess comprehensive control over your calendar, with the following capabilities:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Full CRUD Permissions**: Create, read, update, and delete any events in your calendar, regardless of the creator.
 
-- Configure the top-level `parserOptions` property like this:
+- **Manage Access**:
+  - **Add Users**: Add emails of other users to share your calendar. Registered users with these emails can view your calendar in their list of accessible calendars.
+  - **Remove Users**: Revoke any user's access by deleting their email from your calendar.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## As an Authorized User of Shared Calendars
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+As an authorized user accessing calendars shared with you, your permissions include:
+
+- **CRUD Permissions for Your Events**: Create, read, update, and delete any events that you have personally created within the shared calendar.
+- **Read-Only Access**: For events created by others, you only have read access.

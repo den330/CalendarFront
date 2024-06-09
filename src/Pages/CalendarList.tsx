@@ -75,51 +75,77 @@ export default function CalendarList() {
   }
 
   return (
-    <div>
-      <h1>Calendar List</h1>
-      <div>
-        <h2
+    <div className="p-8">
+      <h1 className="text-2xl font-bold text-center mb-6">Calendar List</h1>
+      <div className="space-y-4">
+        <button
+          className="px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out cursor-pointer"
           onClick={() => {
             const url = `/calendar/${myCalendar?._id}/${myCalendar?.name}/true`;
             console.log(url);
             navigate(url);
           }}
         >
-          {" "}
           My Calendar
-        </h2>
+        </button>
         <div>
-          <label>Add Email:</label>
-          <input type="email" ref={emailRef} />
-          <button onClick={handleAddEmail}>Confirm</button>
+          <label className="block text-sm font-medium text-gray-700">
+            Add the email addresses of users you wish to share your calendar
+            with:
+          </label>
+          <div className="mt-1 flex rounded-md shadow-sm">
+            <input
+              type="email"
+              ref={emailRef}
+              className="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <button
+              onClick={handleAddEmail}
+              className="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Confirm
+            </button>
+          </div>
         </div>
         <div>
-          <label>Delete Email:</label>
-          <Select
-            values={[]}
-            options={emailList.map((email) => ({ value: email, label: email }))}
-            onChange={(selected) => {
-              setEmailToDelete(selected[0].value);
-            }}
-          />
-          <button onClick={handleDeleteEmail}>Confirm</button>
+          <label className="block text-sm font-medium text-gray-700">
+            Delete Email:
+          </label>
+          <div className="mt-1 flex rounded-md shadow-sm">
+            <Select
+              values={[]}
+              options={emailList.map((email) => ({
+                value: email,
+                label: email,
+              }))}
+              onChange={(selected) => {
+                setEmailToDelete(selected[0].value);
+              }}
+              className="flex-grow"
+            />
+            <button
+              onClick={handleDeleteEmail}
+              className="px-4 py-2 bg-red-500 text-white rounded-r-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            >
+              Confirm
+            </button>
+          </div>
         </div>
       </div>
-      <div>
-        <h2>Shared Calendars</h2>
-        {calendarList.map((calendar) => {
-          return (
-            <h3
-              key={calendar._id}
-              onClick={() => {
-                const url = `/calendar/${calendar._id}/${calendar.name}/false`;
-                navigate(url);
-              }}
-            >
-              {calendar.name}
-            </h3>
-          );
-        })}
+      <div className="mt-6">
+        <h2 className="text-lg font-semibold">Shared Calendars</h2>
+        {calendarList.map((calendar) => (
+          <button
+            key={calendar._id}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out cursor-pointer"
+            onClick={() => {
+              const url = `/calendar/${calendar._id}/${calendar.name}/false`;
+              navigate(url);
+            }}
+          >
+            {calendar.name}
+          </button>
+        ))}
       </div>
     </div>
   );
