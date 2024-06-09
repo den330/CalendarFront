@@ -29,9 +29,9 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
   onClose,
 }): ReactElement | null => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const startRef = useRef(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+  const startRef = useRef<HTMLInputElement>(null);
   const { isLoggedIn } = useLogInContext();
 
   function handleEdit() {
@@ -62,38 +62,62 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
     return null;
   }
   return (
-    <Popup open={shouldOpen} closeOnDocumentClick onClose={onClose}>
-      <div>
-        <h1>{event.title}</h1>
+    <Popup
+      open={shouldOpen}
+      closeOnDocumentClick
+      onClose={onClose}
+      modal
+      nested
+    >
+      <div className="bg-white p-6 rounded-lg shadow-lg text-gray-800">
+        <h1 className="text-2xl font-bold mb-4">{event.title}</h1>
         <p>{event.description}</p>
         <p>{event.start.toLocaleDateString()}</p>
         {(isLoggedIn.userId === event.creatorId || calendarOwnership) && (
-          <button onClick={handleEdit}> Edit </button>
+          <button
+            onClick={handleEdit}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-150 ease-in-out"
+          >
+            Edit
+          </button>
         )}
         {editMode && (
-          <div>
-            <input type="text" defaultValue={event.title} ref={titleRef} />
+          <div className="space-y-4 mt-4">
+            <input
+              type="text"
+              defaultValue={event.title}
+              ref={titleRef}
+              className="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
             <input
               type="text"
               defaultValue={event.description}
               ref={descriptionRef}
+              className="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
             <input
               type="datetime-local"
               defaultValue={formatDateForInputLocal(event.start)}
               ref={startRef}
+              className="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
-            <button onClick={handleSave}> Save </button>
+            <button
+              onClick={handleSave}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-150 ease-in-out"
+            >
+              Save
+            </button>
           </div>
         )}
         <button
           onClick={() => {
-            if (!event.extendedProps._id) {
+            if (!event._id) {
               return;
             }
-            deleteEvent(event.extendedProps._id);
+            deleteEvent(event._id);
             onClose();
           }}
+          className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-150 ease-in-out"
         >
           Delete
         </button>
