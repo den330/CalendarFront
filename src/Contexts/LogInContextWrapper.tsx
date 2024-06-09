@@ -1,5 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
-import { getLogInStatus } from "../Utilities/ConnectionHub";
+import { ReactNode, createContext, useState } from "react";
 
 type LogInContextType = {
   isLoggedIn: { status: boolean; userId: string };

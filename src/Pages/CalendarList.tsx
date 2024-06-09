@@ -14,7 +14,7 @@ export default function CalendarList() {
   const emailRef = useRef<HTMLInputElement>(null);
   const [calendarList, setCalendarList] = useState<Calendar[] | []>([]);
   const [myCalendar, setMyCalendar] = useState<Calendar | null>(null);
-  const [emailList, setEmailList] = useState<string[] | []>([]);
+  const [emailList, setEmailList] = useState<string[]>([]);
   const [emailToDelete, setEmailToDelete] = useState<string | null>(null);
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import MyEvent from "../../Types/Event";
 import Popup from "reactjs-popup";
 import { useLogInContext } from "../../CustomHooks/useLogInContext";
 
-const formatDateForInputLocal = (date) => {
+const formatDateForInputLocal = (date: Date) => {
   // Adjust for the timezone offset to keep it local
   const localISOTime = new Date(
     date.getTime() - date.getTimezoneOffset() * 60000
@@ -46,8 +46,8 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
       const updatedEvent: MyEvent = {
         ...event,
         title: titleRef.current.value,
-        description: descriptionRef.current.value || "",
-        start: startRef.current.value,
+        description: descriptionRef.current ? descriptionRef.current.value : "",
+        start: new Date(startRef.current.value),
       };
       updateEvent(updatedEvent);
       setEditMode(false);

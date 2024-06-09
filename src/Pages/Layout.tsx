@@ -70,8 +70,8 @@ export default function Layout() {
                         if (!credential) {
                           throw new Error("No credential in response");
                         }
-                        const decoded = jwtDecode(credential);
-                        console.log("Decoded JWT:", decoded);
+                        const decoded: { email: string } =
+                          jwtDecode(credential);
                         const email = decoded.email;
                         if (!email) {
                           throw new Error("No email in JWT");
