@@ -40,10 +40,9 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
 
   function formatText(input: string): JSX.Element[] {
     return input.split("\n").map((line, index) => (
-      <span key={index}>
+      <div key={index} className="whitespace-pre-wrap">
         {line}
-        <br />
-      </span>
+      </div>
     ));
   }
 
