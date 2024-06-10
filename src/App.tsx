@@ -23,7 +23,8 @@ function App() {
         } else {
           setLoggedIn({ status: false, userId: "" });
         }
-      } catch {
+      } catch (e) {
+        console.log(`Failed to get login status: ${JSON.stringify(e)}`);
         setLoggedIn({ status: false, userId: "" });
       } finally {
         setIsLoading(false);
