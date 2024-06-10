@@ -108,18 +108,20 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
             </button>
           </div>
         )}
-        <button
-          onClick={() => {
-            if (!event._id) {
-              return;
-            }
-            deleteEvent(event._id);
-            onClose();
-          }}
-          className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-150 ease-in-out"
-        >
-          Delete
-        </button>
+        {(isLoggedIn.userId === event.creatorId || calendarOwnership) && (
+          <button
+            onClick={() => {
+              if (!event._id) {
+                return;
+              }
+              deleteEvent(event._id);
+              onClose();
+            }}
+            className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-150 ease-in-out"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </Popup>
   );
