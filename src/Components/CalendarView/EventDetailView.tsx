@@ -38,6 +38,15 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
     setEditMode(!editMode);
   }
 
+  function formatText(input: string): JSX.Element[] {
+    return input.split("\n").map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ));
+  }
+
   async function handleSave() {
     try {
       if (!titleRef.current || !startRef.current) {
@@ -70,7 +79,7 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
     >
       <div className="bg-white p-6 rounded-lg shadow-lg text-gray-800">
         <h1 className="text-2xl font-bold mb-4">{event.title}</h1>
-        <p>{event.description}</p>
+        <p>{formatText(event.description || "")}</p>
         <p>{event.start.toLocaleDateString()}</p>
         {(isLoggedIn.userId === event.creatorId || calendarOwnership) && (
           <button
