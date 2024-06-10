@@ -30,7 +30,7 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
 }): ReactElement | null => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const startRef = useRef<HTMLInputElement>(null);
   const { isLoggedIn } = useLogInContext();
 
@@ -98,11 +98,10 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
               ref={titleRef}
               className="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
-            <input
-              type="text"
+            <textarea
               defaultValue={event.description}
               ref={descriptionRef}
-              className="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="overflow-y-auto h-36 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
             <input
               type="datetime-local"
