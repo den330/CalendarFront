@@ -31,7 +31,6 @@ export default function CalendarList() {
     async function fetchEmailList() {
       try {
         const response = await getEmails();
-        console.log(`Emails: ${response.data.emails}`);
         setEmailList(response.data.emails ?? []);
       } catch (e) {
         alert(`Failed to fetch email list: ${e}`);
@@ -82,7 +81,6 @@ export default function CalendarList() {
           className="px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out cursor-pointer"
           onClick={() => {
             const url = `/calendar/${myCalendar?._id}/${myCalendar?.name}/true`;
-            console.log(url);
             navigate(url);
           }}
         >

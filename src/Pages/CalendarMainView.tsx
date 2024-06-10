@@ -35,7 +35,6 @@ export default function CalendarMainView() {
       creatorId: event.extendedProps.creatorId,
       _id: event.extendedProps._id,
     };
-    console.log(`Event clicked: ${JSON.stringify(myEvent)}`);
     setCurrentClickedEvent(myEvent);
   }
 
@@ -99,7 +98,6 @@ export default function CalendarMainView() {
       if (!calendar_id) {
         throw new Error("Calendar id is not provided");
       }
-      console.log(`new event is ${newEvent}, calendar id is ${calendar_id}`);
       await addEvent(newEvent, calendar_id);
       setEventList((prevEvents) => [...prevEvents, newEvent]);
       setAddEventModal(false);

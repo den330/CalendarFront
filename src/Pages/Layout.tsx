@@ -83,12 +83,10 @@ export default function Layout() {
                         });
                         navigate("/calendarList");
                       } catch (e) {
-                        console.error(`Failed with Google: ${e}`);
+                        alert(`Failed to sign up/in with Google: ${e}`);
                       }
                     }}
-                    onError={() => {
-                      console.log("Login Failed");
-                    }}
+                    onError={() => {}}
                   />
                 </li>
               </>

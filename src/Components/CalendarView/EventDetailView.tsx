@@ -58,7 +58,6 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
   }
 
   if (!event) {
-    console.log(`Current event is null`);
     return null;
   }
   return (
