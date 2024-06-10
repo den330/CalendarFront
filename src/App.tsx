@@ -16,7 +16,6 @@ function App() {
     async function fetchLogInStatus() {
       try {
         const response = await getLogInStatus();
-        console.log(`${response.data}`);
         const loginStatus = response.data.logInStatus;
         if (loginStatus) {
           setLoggedIn({ status: true, userId: response.data.userId });
@@ -24,7 +23,6 @@ function App() {
           setLoggedIn({ status: false, userId: "" });
         }
       } catch (e) {
-        console.log(`Failed to get login status: ${JSON.stringify(e)}`);
         setLoggedIn({ status: false, userId: "" });
       } finally {
         setIsLoading(false);
