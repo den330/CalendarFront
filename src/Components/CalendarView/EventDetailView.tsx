@@ -79,7 +79,9 @@ const EventDetailView: React.FC<EventDetailViewProps> = ({
     >
       <div className="bg-white p-6 rounded-lg shadow-lg text-gray-800">
         <h1 className="text-2xl font-bold mb-4">{event.title}</h1>
-        <p>{formatText(event.description || "")}</p>
+        <p className="max-h-[15em] overflow-y-auto">
+          {formatText(event.description || "")}
+        </p>
         <p>{event.start.toLocaleDateString()}</p>
         {(isLoggedIn.userId === event.creatorId || calendarOwnership) && (
           <button
