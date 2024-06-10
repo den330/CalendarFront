@@ -9,7 +9,7 @@ export default function AddEventFormModal({
 }) {
   const nameRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const name = nameRef.current?.value;
@@ -65,13 +65,12 @@ export default function AddEventFormModal({
         >
           Description
         </label>
-        <input
+        <textarea
           id="description"
           name="description"
-          type="text"
           ref={descriptionRef}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-        />
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 overflow-y-auto h-36"
+        ></textarea>
 
         <button
           type="submit"
