@@ -122,7 +122,7 @@ export default function CalendarList() {
               onChange={(selected) => {
                 setEmailToDelete(selected[0].value);
               }}
-              className="flex-grow"
+              style={{ width: 410 }}
             />
             <button
               onClick={handleDeleteEmail}
