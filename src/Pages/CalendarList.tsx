@@ -48,6 +48,7 @@ export default function CalendarList() {
     }
     try {
       await deleteEmail(emailToDelete);
+      alert("Email deleted successfully");
       setEmailList((prev) => prev.filter((email) => email !== emailToDelete));
       setEmailToDelete(null);
     } catch (e) {
@@ -68,6 +69,8 @@ export default function CalendarList() {
     try {
       await addEmail(newEmail);
       setEmailList((prev) => [...prev, newEmail]);
+      alert("New email added successfully");
+      emailRef.current!.value = "";
     } catch (e) {
       alert(`Failed to add email: ${e}`);
     }
