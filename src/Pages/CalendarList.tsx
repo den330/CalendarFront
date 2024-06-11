@@ -94,11 +94,11 @@ export default function CalendarList() {
             Add the email addresses of users you wish to share your calendar
             with:
           </label>
-          <div className="mt-1 flex rounded-md shadow-sm">
+          <div className="mt-1 flex rounded-md shadow-sm w-[500px]">
             <input
               type="email"
               ref={emailRef}
-              className="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-[500px]"
+              className="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             />
             <button
               onClick={handleAddEmail}
@@ -112,7 +112,7 @@ export default function CalendarList() {
           <label className="block text-sm font-medium text-gray-700">
             Delete Email:
           </label>
-          <div className="mt-1 flex rounded-md shadow-sm w-52">
+          <div className="mt-1 flex rounded-md shadow-sm w-[500px]">
             <Select
               values={[]}
               options={emailList.map((email) => ({
@@ -122,7 +122,7 @@ export default function CalendarList() {
               onChange={(selected) => {
                 setEmailToDelete(selected[0].value);
               }}
-              className="flex-grow w-[500px]"
+              className="flex-grow"
             />
             <button
               onClick={handleDeleteEmail}
