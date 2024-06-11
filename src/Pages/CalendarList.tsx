@@ -90,7 +90,7 @@ export default function CalendarList() {
           My Calendar
         </button>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 w-52">
             Add the email addresses of users you wish to share your calendar
             with:
           </label>
@@ -112,7 +112,7 @@ export default function CalendarList() {
           <label className="block text-sm font-medium text-gray-700">
             Delete Email:
           </label>
-          <div className="mt-1 flex rounded-md shadow-sm">
+          <div className="mt-1 flex rounded-md shadow-sm w-52">
             <Select
               values={
                 emailToDelete
