@@ -78,7 +78,7 @@ export default function CalendarList() {
       <h1 className="text-2xl font-bold text-center mb-6">Calendar List</h1>
       <div className="space-y-4">
         <button
-          className="px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out cursor-pointer"
+          className="px-4 py-2 bg-green-500 text-white rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out cursor-pointer"
           onClick={() => {
             const url = `/calendar/${myCalendar?._id}/${myCalendar?.name}/true`;
             navigate(url);
