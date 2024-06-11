@@ -135,6 +135,9 @@ export default function CalendarList() {
       </div>
       <div className="mt-6">
         <h2 className="text-lg font-semibold">Shared Calendars</h2>
+        {calendarList.length === 0 && (
+          <p>No shared calendars available at the moment.</p>
+        )}
         {calendarList.map((calendar) => (
           <button
             key={calendar._id}
