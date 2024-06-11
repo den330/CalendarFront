@@ -112,7 +112,7 @@ export default function CalendarList() {
           <label className="block text-sm font-medium text-gray-700">
             Delete Email:
           </label>
-          <div className="mt-1 flex rounded-md shadow-sm w-[500px]">
+          <div className="mt-1 flex flex-row rounded-md shadow-sm w-[500px]">
             <Select
               values={[]}
               options={emailList.map((email) => ({
