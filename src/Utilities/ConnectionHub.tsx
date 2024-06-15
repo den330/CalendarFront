@@ -70,6 +70,10 @@ export const getEvents = async (calendarId: string) => {
   return await client.get(`/calendar/getEvents/${calendarId}`);
 };
 
+export const getAboutMessage = async () => {
+  return await client.get("/about");
+};
+
 export const addEvent = async (event: Event, calendar_id: string) => {
   return await client.post("/calendar/addEvent", {
     _id: event._id,
