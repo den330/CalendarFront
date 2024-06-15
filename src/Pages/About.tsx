@@ -17,7 +17,6 @@ export default function About() {
     const socket = io(import.meta.env.VITE_BASE_URL, {
       transports: ["websocket"],
     });
-    console.log(`socket is ${socket}`);
     socket.on("messageUpdated", (data: { message: string }) => {
       setMessage(data.message);
     });
